@@ -1,0 +1,465 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --font-heading: 'Playfair Display', serif; /* For headings */
+    --font-body: 'Quicksand', sans-serif; /* For body text */
+    --color-bg1: #FFE6E6;  /* Soft Blush */
+    --color-bg2: #FFC2C2;  /* Light Pink */
+    --color1: #FFB3B3;     /* Soft Pink */
+    --color2: #FF9999;     /* Warm Pink */
+    --color3: #FF6666;     /* Romantic Red */
+    --color4: #FF4D4D;     /* Rich Red */
+    --color5: #333333;     /* Dark Gray for text */
+    --color-interactive: #FF8080; /* Interactive Pink */
+}
+
+/* Body and Background */
+body {
+    background: radial-gradient(circle at center, 
+        var(--color-bg1) 20%, 
+        var(--color-bg2) 40%, 
+        var(--color1) 60%, 
+        var(--color2) 75%, 
+        var(--color3) 90%, 
+        var(--color4) 100%);
+    background-attachment: fixed;
+    color: var(--color5);
+    font-family: 'Georgia', serif; /* Romantic serif font */
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Headings */
+h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-heading);
+    font-weight: 700; /* Bold weight for headings */
+    color: var(--color5);
+    margin-bottom: 1rem;
+}
+
+h1 {
+    font-size: 2.5rem;
+}
+
+h2 {
+    font-size: 2rem;
+}
+
+h3 {
+    font-size: 1.75rem;
+}
+
+/* Heart-shaped background */
+.heart-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Place it behind all other content */
+    animation: pulse 2s infinite ease-in-out; /* Beating animation */
+    opacity: 0.8; /* Soft transparency */
+    filter: blur(30px); /* Blurry effect */
+}
+
+.heart-background svg {
+    width: 100%;
+    height: 100%;
+    fill: url(#heart-gradient); /* Apply gradient to the heart */
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.1); /* Slightly larger */
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+/* Ensure content is above the heart background */
+.body-wrapper {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* Navigation Bar */
+.navbar-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2); /* Soft border */
+}
+
+.navlogo, .navlinks {
+    color: var(--color5);
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+/* Main Layout */
+.main-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    padding: 20px;
+    flex: 1; /* Allow main content to grow and push footer down */
+}
+
+/* Left and Right Aside */
+.aside-wrapper {
+    padding: 5px;
+    flex: 0 0 200px; /* Fixed width to prevent stretching */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.aside-left-wrapper {
+    padding: 10px;
+}
+
+.aside {
+    width: 100%;
+    text-align: center;
+    color: var(--color5);
+}
+
+/* Video Card */
+.video-card {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+    will-change: transform, box-shadow;
+    perspective: 1000px;
+    position: relative;
+}
+
+.video-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Glare Effect */
+.glare {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border-radius: inherit;
+    background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.3), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease-out;
+    pointer-events: none;
+}
+
+.video-card:hover .glare {
+    opacity: 1;
+}
+
+.video-card video {
+    width: 100%;
+    border-radius: 15px;
+}
+
+/* Main Section */
+.main-section-wrapper {
+    font-style: var(--font-body);
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* 3D Box */
+.threed-box {
+    width: 250px;
+    height: 250px; /* Set a height */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden; /* Ensures nothing spills */
+    position: relative;
+}
+
+/* Question and Choice Wrapper */
+
+.choice-wrapper > div {
+    margin-top: 20px;
+}
+
+.question-wrapper,
+.choice-wrapper {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.question-box,
+.choice-box {
+    text-align: center;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 20px;
+    padding: 20px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease-out, box-shadow 0.3s ease-out;
+}
+
+.question-box:hover,
+.choice-box:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2);
+}
+
+.click-box button,
+.choice-box button {
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.3s ease-out, transform 0.3s ease-out;
+    color: var(--color5);
+    font-size: 1.9rem;
+}
+
+/* Button container for Yes/No buttons */
+.button-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    min-width: 500px;
+    min-height: 200px;
+    padding: 30px;
+}
+
+.choice-box > button,
+.button-container > button {
+    margin: 5px;
+}
+
+.choice-box button:first-child,
+.choice-box .yes-btn {
+    background-color: #A7D397; /* Soft pastel green */
+    color: white;
+    border: none;
+    transition:  0.3s ease-in-out;
+}
+
+.choice-box button:last-child,
+.choice-box .no-btn {
+    background-color: white;
+    color: black;
+    transition: 0.3s ease-in-out;
+}
+
+/* Desktop: No button jumping styles */
+@media (min-width: 769px) {
+    .button-container {
+        min-width: 550px;
+        min-height: 250px;
+    }
+    
+    /* No button starts inline, becomes absolute when jumping */
+    .choice-box .no-btn {
+        cursor: pointer;
+        transition: none; /* Disable transition for instant jumps */
+    }
+    
+    .choice-box .no-btn.jumping {
+        position: absolute;
+    }
+}
+
+/* Hover effects */
+.choice-box button:first-child:hover,
+.choice-box .yes-btn:hover {
+    background-color: #8BBF77; /* Slightly deeper green on hover */
+}
+
+.choice-box button:last-child:hover,
+.choice-box .no-btn:hover {
+    background-color: #f74f4f; /* Soft red hover effect */
+}
+
+.click-box button:hover,
+.choice-box button:hover {
+    background: var(--color2);
+    transform: scale(1.05);
+}
+
+
+.choice-box button {
+    transition: all 0.3s ease-in-out;
+    padding: 10px 20px;
+    border-radius: 10px;
+    font-size: 1.5rem;
+}
+
+.love-text {
+    font-size: 2.5rem;
+    font-family: 'Quicksand', sans-serif;
+    font-weight: bold;
+    color: var(--color5); /* Warm Pink */
+    text-align: center;
+}
+
+.no-choice-text {
+    font-size: 1.5rem;
+    font-style: italic;
+    color: var(--color5); /* Dark gray */
+    margin-top: 10px;
+    display: block;
+}
+/* Style for the mute button */
+#mute-button {
+    background-color: var(--color5);
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease-out, transform 0.3s ease-out;
+    font-size: 1rem;
+}
+
+#mute-button:hover {
+    background-color: var(--color5);
+    transform: scale(1.05);
+}
+
+#volume-slider {
+    width: 100%;
+    margin-top: 10px;
+    -webkit-appearance: none;
+    background: linear-gradient(to right, #A7D397, #8BBF77);
+    height: 5px;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+}
+
+/* Style for the slider thumb */
+#volume-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 15px;
+    height: 15px;
+    background: white;
+    border: 2px solid #8BBF77;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+#volume-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+/* Footer */
+footer {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+    backdrop-filter: blur(10px); /* Frosted glass effect */
+    border-top: 1px solid rgba(255, 255, 255, 0.2); /* Soft border */
+    margin-top: auto; /* Push footer to the bottom */
+    color: var(--color5);
+}
+
+.hide{
+    display: none;
+}
+
+.partner-name {
+    font-family: 'Playfair Display', serif; /* Fancy font */
+    font-size: 3rem; /* Bigger text */
+    font-weight: bold;
+    color: var(--color3); /* Romantic red */
+}
+
+.heart-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 999; /* Ensure it's above everything */
+}
+
+.heart {
+    position: absolute;
+    bottom: 0;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    transform: rotate(-45deg);
+    animation: floatUp 4s linear forwards;
+    opacity: 0.8;
+}
+
+/* Creating heart shape using before and after pseudo-elements */
+.heart::before,
+.heart::after {
+    content: "";
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: red;
+    border-radius: 50%;
+}
+
+.heart::before {
+    top: -10px;
+    left: 0;
+}
+
+.heart::after {
+    left: 10px;
+    top: 0;
+}
+
+@keyframes floatUp {
+    0% {
+        transform: translateY(0) scale(1) rotate(-45deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateY(-100vh) scale(0.5) rotate(-45deg);
+        opacity: 0;
+    }
+}
