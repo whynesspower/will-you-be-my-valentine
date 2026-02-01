@@ -26,11 +26,14 @@ document.addEventListener("DOMContentLoaded", function () {
     // Desktop: Make No button jump away BEFORE mouse reaches it
     if (!isMobileDevice()) {
         let hasStartedJumping = false;
-        const proximityThreshold = 180; // Very large detection radius
-        const moveDistance = 120; // How far to move each time
-        const edgeThreshold = 30; // How close to edge before triggering anti-clockwise
+        const proximityThreshold = 200; // Reduced from 300 to be less aggressive
+        const moveDistance = 150; // Reduced from 200 to be less jumpy
+        const edgeThreshold = 50; 
         
-        // Track mouse movement - instant response
+        // Add a small transition for smoother movement
+        noButton.style.transition = "all 0.2s ease-out";
+        
+        // Track mouse movement
         document.addEventListener('mousemove', function(e) {
             if (choiceBox.classList.contains('hide')) return;
             
@@ -47,7 +50,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 Math.pow(e.clientY - buttonCenterY, 2)
             );
             
-            // If mouse is anywhere near, move away INSTANTLY
+            // If mouse is near, move away
             if (distance < proximityThreshold) {
                 const buttonWidth = buttonRect.width;
                 const buttonHeight = buttonRect.height;
@@ -67,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (!hasStartedJumping) {
                     hasStartedJumping = true;
                     noButton.classList.add('jumping');
+                    noButton.style.position = 'absolute'; 
                     // Set initial position
                     noButton.style.left = currentX + 'px';
                     noButton.style.top = currentY + 'px';
@@ -88,49 +92,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 const atTopEdge = newY <= minY + edgeThreshold;
                 const atBottomEdge = newY >= maxY - edgeThreshold;
                 
-                // Anti-clockwise direction at edges:
-                // Top edge → move left, Left edge → move down
-                // Bottom edge → move right, Right edge → move up
-                
+                // Anti-clockwise direction at edges logic...
                 if (atTopEdge && atLeftEdge) {
-                    // Top-left corner: move down (anti-clockwise)
-                    newX = minX;
-                    newY = currentY + moveDistance;
+                    newX = minX; newY = currentY + moveDistance;
                 } else if (atTopEdge && atRightEdge) {
-                    // Top-right corner: move left (anti-clockwise)
-                    newX = currentX - moveDistance;
-                    newY = minY;
+                    newX = currentX - moveDistance; newY = minY;
                 } else if (atBottomEdge && atRightEdge) {
-                    // Bottom-right corner: move up (anti-clockwise)
-                    newX = maxX;
-                    newY = currentY - moveDistance;
+                    newX = maxX; newY = currentY - moveDistance;
                 } else if (atBottomEdge && atLeftEdge) {
-                    // Bottom-left corner: move right (anti-clockwise)
-                    newX = currentX + moveDistance;
-                    newY = maxY;
+                    newX = currentX + moveDistance; newY = maxY;
                 } else if (atTopEdge) {
-                    // Top edge: move left (anti-clockwise)
-                    newX = currentX - moveDistance;
-                    newY = minY;
+                    newX = currentX - moveDistance; newY = minY;
                 } else if (atLeftEdge) {
-                    // Left edge: move down (anti-clockwise)
-                    newX = minX;
-                    newY = currentY + moveDistance;
+                    newX = minX; newY = currentY + moveDistance;
                 } else if (atBottomEdge) {
-                    // Bottom edge: move right (anti-clockwise)
-                    newX = currentX + moveDistance;
-                    newY = maxY;
+                    newX = currentX + moveDistance; newY = maxY;
                 } else if (atRightEdge) {
-                    // Right edge: move up (anti-clockwise)
-                    newX = maxX;
-                    newY = currentY - moveDistance;
+                    newX = maxX; newY = currentY - moveDistance;
                 }
                 
                 // Clamp to container bounds
                 newX = Math.max(minX, Math.min(maxX, newX));
                 newY = Math.max(minY, Math.min(maxY, newY));
                 
-                // Apply position instantly
+                // Apply position
                 noButton.style.left = newX + 'px';
                 noButton.style.top = newY + 'px';
             }
